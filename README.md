@@ -20,6 +20,9 @@ Here we'll see an example os Kotlin.serialization coupled with Rx and ViewModel
         jvmTarget = "1.8"
     }
     
+    ...
+    
+    dependencies{
     
     implementation "io.reactivex.rxjava3:rxkotlin:3.0.0"
     implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
@@ -28,6 +31,7 @@ Here we'll see an example os Kotlin.serialization coupled with Rx and ViewModel
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
+    }
 
 # What is this about ?
 
