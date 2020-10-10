@@ -24,7 +24,10 @@ class MainActivity : AppCompatActivity() {
         const val  URL = "https://api.github.com/repositories?since=364"
     }
 
-
+    /**
+     *
+     * UI update
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +48,14 @@ class MainActivity : AppCompatActivity() {
 
         viewModel?.fetchListOfData()
 
-
-
     }
 
 
-
 }
+
+/**
+ * Item for RecyclerView setup
+ */
 
 class AdapterRepo(private val context : Context) : RecyclerView.Adapter<AdapterRepo.VH>() {
 
