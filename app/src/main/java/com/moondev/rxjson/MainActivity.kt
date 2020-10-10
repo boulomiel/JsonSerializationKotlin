@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var viewModel : VM?  = null
+    private var viewModel : VM?  = null
 
     private var adapter  : AdapterRepo? = null
 
@@ -33,11 +33,12 @@ class MainActivity : AppCompatActivity() {
         viewModel =  ViewModelProvider.AndroidViewModelFactory
             .getInstance(this.application).create(VM::class.java)
 
+        adapter = AdapterRepo(this)
         recycler.layoutManager =  LinearLayoutManager(this)
 
 
         viewModel?.listOfRepo?.observe(this, { list ->
-            adapter = AdapterRepo(this, list )
+            adapter?.update(list)
             recycler.adapter = adapter
         })
 
@@ -52,8 +53,10 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-class AdapterRepo(private val context : Context, private val list : List<Repo>) : RecyclerView.Adapter<AdapterRepo.VH>() {
+class AdapterRepo(private val context : Context) : RecyclerView.Adapter<AdapterRepo.VH>() {
 
+
+    private var listOfRepo  = listOf<Repo>()
 
 
     class VH(itemView : View)  : RecyclerView.ViewHolder(itemView){
@@ -73,16 +76,23 @@ class AdapterRepo(private val context : Context, private val list : List<Repo>) 
 
     }
 
+    fun update(list: List<Repo>){
+        listOfRepo = list
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val v =  LayoutInflater.from(context).inflate(R.layout.repo_item,parent,false)
         return VH(v)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val repo =  list[position]
+        val repo =  listOfRepo[position]
 
         holder.bind(repo.name, repo.description)
     }
 
-    override fun getItemCount(): Int = list.size
+
+
+    override fun getItemCount(): Int = listOfRepo.size
 }
